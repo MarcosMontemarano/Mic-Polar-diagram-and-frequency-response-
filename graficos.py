@@ -7,11 +7,10 @@ from suavizado import suavizado
 df_0 = pd.read_excel('RESPUESTA_FRECUENCIA_0.xlsx')
 
 # Extrae columna de frecuencias
-frec_0 = df_0.iloc[:,[0]]
+frec_0 = df_0.iloc[1:,[0]]
 
 # Extrae columna de magnitud en dB
-db_0 = df_0.iloc[:,[1]]
+db_0 = df_0.iloc[1:,[1]]
 
 # Suavizado con función externa
-
 suavizado_0 = suavizado(frec_0,db_0,3)
