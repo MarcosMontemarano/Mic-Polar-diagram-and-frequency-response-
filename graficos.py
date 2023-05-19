@@ -13,4 +13,12 @@ frec_0 = df_0.iloc[1:,[0]]
 db_0 = df_0.iloc[1:,[1]]
 
 # Suavizado con función externa
-suavizado_0 = suavizado(frec_0,db_0,3)
+#suavizado_0 = suavizado(frec_0,db_0,3)
+
+
+plt.plot(frec_0,db_0)
+plt.semilogx()
+plt.xlabel("Frequency [Hz]")
+plt.ylabel("Amplitude [dB]")
+plt.title("Frequency Response 0°")
+plt.ylim([-2,9])
