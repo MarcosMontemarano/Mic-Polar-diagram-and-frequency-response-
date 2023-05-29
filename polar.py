@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.ticker import Formatter
 
 # Lectura de excel y armado de data (Magnitud)
 
@@ -51,9 +52,10 @@ pp_16000_2 = pp_16000_2[::-1]
 pp_16000 = np.hstack((df_patronpolar[775,1:],pp_16000_2))
 
 # Datos de ángulos 
-angulos = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135,
-            150, 165, 180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345, 360]
-terc_octava = [32,63,125,250,500,1000,2000,4000,8000,16000]
+angulos = [0, 15, 30, 45, 60, 75, 90, 
+           105, 120, 135, 150, 165, 180,195, 
+           210, 225, 240, 255, 270, 285, 300, 315, 
+           330, 345, 0]
 
 # Crear un DataFrame con los datos
 
@@ -70,20 +72,23 @@ df['X'] = df['Magnitud 1000'] * np.cos(df['Radianes'])
 df['Y'] = df['Magnitud 1000'] * np.sin(df['Radianes'])
 
 # Graficar el diagrama polar
-fig = plt.figure()
+fig = plt.figure(figsize=(10,6), layout='constrained')
 ax = fig.add_subplot(111, polar=True)
 ax.plot(df['Radianes'], df.iloc[:,1:11], label=['32Hz','63Hz'
                                                 ,'125Hz','250Hz'
-                                                ,'500Hz','1000Hz'
-                                                ,'2000Hz','4000Hz'
-                                                ,'8000Hz','16000Hz'])
-angle = np.deg2rad(225)
-ax.legend(loc="upper left",
-          bbox_to_anchor=(.9 + np.cos(angle)/2, .9 + np.sin(angle)/2))
+                                                ,'500Hz','1kHz'
+                                                ,'2kHz','4kHz'
+                                                ,'8kHz','16kHz'],ls="--")
+
+angle = np.deg2rad(45)
+ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
+          fancybox=True, shadow=True, ncol=5)
 
 # Personalizar el gráfico
 ax.set_xticks(df['Radianes'])
-ax.set_xticklabels(df['Ángulo'])
+ax.set_xticklabels(angulos)
+ax.set_rlabel_position(22.5)
+ax.set_theta_zero_location("N")
 # ax.set_rticks([0.2, 0.4, 0.6, 0.8, 1.0])
 ax.set_title('Diagrama Polar Behringer ECM8000')
 ax.grid(True)
