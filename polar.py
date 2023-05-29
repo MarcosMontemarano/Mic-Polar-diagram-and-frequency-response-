@@ -59,11 +59,10 @@ angulos = [0, 15, 30, 45, 60, 75, 90,
 
 # Crear un DataFrame con los datos
 
-df = pd.DataFrame({'Ángulo': angulos, 'Magnitud 32':pp_32,
-                    'Magnitud 63': pp_63, 'Magnitud 125':pp_125, 'Magnitud 250':pp_250,
+df = pd.DataFrame({'Ángulo': angulos, 'Magnitud 125':pp_125, 'Magnitud 250':pp_250,
                     'Magnitud 500':pp_500, 'Magnitud 1000':pp_1000, 
                     'Magnitud 2000':pp_2000,'Magnitud 4000':pp_4000,
-                    'Magnitud 8000':pp_8000,'Magnitud 16000':pp_16000})
+                    'Magnitud 8000':pp_8000})
 
 # Calcular las coordenadas polares
 df['Radianes'] = df['Ángulo'].apply(
@@ -74,11 +73,15 @@ df['Y'] = df['Magnitud 1000'] * np.sin(df['Radianes'])
 # Graficar el diagrama polar
 fig = plt.figure(figsize=(10,6), layout='constrained')
 ax = fig.add_subplot(111, polar=True)
-ax.plot(df['Radianes'], df.iloc[:,1:11], label=['32Hz','63Hz'
-                                                ,'125Hz','250Hz'
-                                                ,'500Hz','1kHz'
-                                                ,'2kHz','4kHz'
-                                                ,'8kHz','16kHz'],ls="--")
+
+ax.plot(df['Radianes'],df.iloc[:,1],label="125Hz",ls="dashdot")
+ax.plot(df['Radianes'],df.iloc[:,2],label="250Hz",ls="solid")
+ax.plot(df['Radianes'],df.iloc[:,3],label="500Hz",ls="solid")
+ax.plot(df['Radianes'],df.iloc[:,4],label="1kHz",ls="solid")
+ax.plot(df['Radianes'],df.iloc[:,5],label="2kHz",ls="solid")
+ax.plot(df['Radianes'],df.iloc[:,6],label="4kHz",ls="solid")
+ax.plot(df['Radianes'],df.iloc[:,7],label="8kHz",ls=(0, (3, 5, 1, 5)))
+
 
 angle = np.deg2rad(45)
 ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
@@ -87,10 +90,11 @@ ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
 # Personalizar el gráfico
 ax.set_xticks(df['Radianes'])
 ax.set_xticklabels(angulos)
-ax.set_rlabel_position(22.5)
+ax.set_ylabel("Angle [°]",loc="bottom")
+# ax.set_rlabel_position(22.5)
 ax.set_theta_zero_location("N")
 # ax.set_rticks([0.2, 0.4, 0.6, 0.8, 1.0])
-ax.set_title('Diagrama Polar Behringer ECM8000')
+ax.set_title('Polar Pattern Behringer ECM8000')
 ax.grid(True)
 
 # Mostrar el gráfico

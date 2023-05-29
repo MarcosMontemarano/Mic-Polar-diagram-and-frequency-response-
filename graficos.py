@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from suavizado import suavizado
+from matplotlib.ticker import ScalarFormatter
 
 # Lee el archivo Excel y crea un DataFrame
 df_0 = pd.read_excel('RESPUESTA_FRECUENCIA_0.xlsx')
@@ -34,28 +35,40 @@ suavizado_45 = suavizado_45[1:]
 suavizado_90 = suavizado_90[1:]
 
 #Plot Rta. Fcia. 0°
-plt.figure(1)
 plt.plot(frec_0,suavizado_0)
 plt.semilogx()
+ax = plt.gca()
+ax.get_xaxis().set_major_formatter(ScalarFormatter())
 plt.xlabel("Frequency [Hz]")
-plt.ylabel("Amplitude [dB]")
+plt.ylabel("Relative Response [dB]")
 plt.title("Frequency Response 0°")
+plt.xlim([20,20000])
 plt.ylim([-2,9])
+plt.grid(True,which='both')
+
 
 #Plot Rta. Fcia. 45°
 plt.figure(2)
 plt.plot(frec_45,suavizado_45)
 plt.semilogx()
+ax = plt.gca()
+ax.get_xaxis().set_major_formatter(ScalarFormatter())
 plt.xlabel("Frequency [Hz]")
-plt.ylabel("Amplitude [dB]")
+plt.ylabel("Relative Response [dB]")
 plt.title("Frequency Response 45°")
+plt.xlim([20,20000])
 plt.ylim([-2,9])
+plt.grid(True,which='both')
 
 #Plot Rta. Fcia. 90°
 plt.figure(3)
 plt.plot(frec_90,suavizado_90)
 plt.semilogx()
+ax = plt.gca()
+ax.get_xaxis().set_major_formatter(ScalarFormatter())
 plt.xlabel("Frequency [Hz]")
-plt.ylabel("Amplitude [dB]")
+plt.ylabel("Relative Response [dB]")
 plt.title("Frequency Response 90°")
+plt.xlim([20,20000])
 plt.ylim([-2,9])
+plt.grid(True,which='both')
