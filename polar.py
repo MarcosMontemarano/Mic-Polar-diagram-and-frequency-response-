@@ -74,26 +74,34 @@ df['Y'] = df['Magnitud 1000'] * np.sin(df['Radianes'])
 fig = plt.figure(figsize=(10,6), layout='constrained')
 ax = fig.add_subplot(111, polar=True)
 
-ax.plot(df['Radianes'],df.iloc[:,1],label="125Hz",ls="dashdot")
-ax.plot(df['Radianes'],df.iloc[:,2],label="250Hz",ls="solid")
-ax.plot(df['Radianes'],df.iloc[:,3],label="500Hz",ls="solid")
-ax.plot(df['Radianes'],df.iloc[:,4],label="1kHz",ls="solid")
-ax.plot(df['Radianes'],df.iloc[:,5],label="2kHz",ls="solid")
-ax.plot(df['Radianes'],df.iloc[:,6],label="4kHz",ls="solid")
-ax.plot(df['Radianes'],df.iloc[:,7],label="8kHz",ls=(0, (3, 5, 1, 5)))
+# Referencia de magnitud a 1kHz y 0°
+ref = df.iloc[0,4] 
 
+ax.plot(df['Radianes'],df.iloc[:,1]-df.iloc[0,1],label="125Hz",ls="solid",color='k')
+ax.plot(df['Radianes'],df.iloc[:,2]-df.iloc[0,2],label="250Hz",ls="solid",color='b',linewidth=0.8)
+ax.plot(df['Radianes'],df.iloc[:,3]-df.iloc[0,3],label="500Hz",ls="solid",color='y',linewidth=0.8)
+ax.plot(df['Radianes'],df.iloc[:,4]-df.iloc[0,4],label="1kHz",ls="solid",color='c',linewidth=0.8)
+ax.plot(df['Radianes'],df.iloc[:,5]-df.iloc[0,5],label="2kHz",ls=":",color='r')
+ax.plot(df['Radianes'],df.iloc[:,6]-df.iloc[0,6],label="4kHz",ls=":",color='g')
+ax.plot(df['Radianes'],df.iloc[:,7]-df.iloc[0,7],label="8kHz",ls="dashdot",color='k')
 
+# Caja con referencias de frecuencia
 angle = np.deg2rad(45)
 ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
           fancybox=True, shadow=True, ncol=5)
 
 # Personalizar el gráfico
+ax=plt.gca()
+ax.set_rlim(-1,2)
+ax.set_rticks([-20,-15,-10,-5,0])
 ax.set_xticks(df['Radianes'])
 ax.set_xticklabels(angulos)
 ax.set_ylabel("Angle [°]",loc="bottom")
 # ax.set_rlabel_position(22.5)
 ax.set_theta_zero_location("N")
-# ax.set_rticks([0.2, 0.4, 0.6, 0.8, 1.0])
+ax.set_rlim
+ax.text(np.radians(10),-5,"dB")
+
 ax.set_title('Polar Pattern Behringer ECM8000')
 ax.grid(True)
 
